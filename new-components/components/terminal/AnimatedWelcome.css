@@ -1,0 +1,110 @@
+
+:root {
+  --glitch-text-color: #0891b2; /* cyan-600 */
+  --crt-glow-color: rgba(8, 145, 178, 0.3);
+  --crt-scanline-color: rgba(0, 0, 0, 0.1);
+}
+
+html.dark {
+  --glitch-text-color: #00ffde; /* A bright cyan/teal */
+  --crt-glow-color: rgba(0, 255, 222, 0.5);
+  --crt-scanline-color: rgba(0, 0, 0, 0.25);
+}
+
+.glitch-container {
+  font-family: 'monospace', monospace;
+  text-align: center;
+  margin-bottom: 1rem;
+  padding: 2rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* CRT Scanlines Overlay */
+.glitch-container::before {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, var(--crt-scanline-color) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+  z-index: 2;
+  background-size: 100% 4px, 3px 100%;
+  pointer-events: none;
+  animation: crt-flicker 0.15s infinite;
+}
+
+
+/* CRT "Boot-up" Scanline */
+.glitch-container::after {
+  content: ' ';
+  display: block;
+  position: absolute;
+  left: 0;
+  top: -10%;
+  width: 100%;
+  height: 4px;
+  background: var(--glitch-text-color);
+  box-shadow: 0 0 10px 2px var(--crt-glow-color);
+  animation: crt-scan 2s cubic-bezier(0.2, 0.6, 0, 1) forwards;
+  z-index: 3;
+}
+
+
+.glitch-text {
+  position: relative;
+  font-size: 1.5rem; /* Adjust as needed */
+  font-weight: bold;
+  color: var(--glitch-text-color);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  animation: crt-text-flicker 3s infinite, crt-glow 5s infinite;
+}
+
+.glitch-char {
+  display: inline-block;
+  position: relative;
+}
+
+/* Keyframe Animations */
+
+@keyframes crt-scan {
+  from {
+    top: -10%;
+  }
+  to {
+    top: 110%;
+  }
+}
+
+@keyframes reveal-text {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes crt-flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+@keyframes crt-text-flicker {
+  0%, 100% { opacity: 1; }
+  49% { opacity: 1; }
+  50% { opacity: 0.6; }
+  51% { opacity: 1; }
+  74% { opacity: 1; }
+  75% { opacity: 0.8; }
+  76% { opacity: 1; }
+}
+
+@keyframes crt-glow {
+  0%, 100% {
+    text-shadow: 0 0 5px var(--crt-glow-color), 0 0 10px var(--crt-glow-color), 0 0 15px var(--crt-glow-color);
+  }
+  50% {
+    text-shadow: 0 0 10px var(--crt-glow-color), 0 0 15px var(--crt-glow-color), 0 0 20px var(--crt-glow-color);
+  }
+}

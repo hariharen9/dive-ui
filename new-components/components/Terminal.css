@@ -1,0 +1,14 @@
+.blinking-cursor {
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  from, to {
+    /* Transparent simulates the cursor being gone */
+    border-right-color: transparent;
+  }
+  50% {
+    /* Use currentColor to match the text color */
+    border-right-color: currentColor; 
+  }
+}
